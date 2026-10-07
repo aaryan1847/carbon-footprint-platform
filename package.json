@@ -2,10 +2,6 @@
   "name": "carbon-footprint-platform",
   "version": "1.0.0",
   "description": "Carbon Footprint Awareness Platform - An interactive Web Technology project calculating personal carbon footprint with dynamic charts, PDF reporting, and eco tips.",
-  "scripts": {
-    "start": "echo 'Static web application ready'",
-    "build": "echo 'Build complete'"
-  },
   "keywords": [
     "carbon-footprint",
     "sustainability",
