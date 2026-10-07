@@ -51,7 +51,11 @@
     <div id="msg" class="msg"></div>
   </form>
   <button id="demoBtn" type="button" class="alt" style="width:100%;margin-top:12px;font-size:0.92rem;border:1px dashed var(--green)">⚡ Quick Demo Login (Instant Access)</button>
-  <p class="hint" style="margin-top:14px;text-align:center">Accounts are saved in your browser (demo project, no server).</p>
+  <div class="hint" style="margin-top:14px;text-align:center;line-height:1.6">
+    <div style="color:#69f0ae;font-weight:600">🔑 Default Admin Credentials:</div>
+    <div>Email: <b>admin@example.com</b> · Phone: <b>9876543210</b> · Pass: <b>admin123</b></div>
+    <div style="margin-top:4px"><a href="#" id="fillAdmin" style="text-decoration:underline;cursor:pointer;font-size:0.85rem">Click to auto-fill Admin credentials</a></div>
+  </div>
 </div></div>
 
 <script src="js/auth.js"></script>
@@ -60,6 +64,13 @@ if (Auth.current()) location.replace('index.html');
 $('demoBtn').onclick = () => {
   Auth.demoLogin();
   location.href = 'index.html';
+};
+$('fillAdmin').onclick = (e) => {
+  e.preventDefault();
+  setMode('login');
+  $('email').value = 'admin@example.com';
+  $('phone').value = '9876543210';
+  $('password').value = 'admin123';
 };
 let mode = 'login';
 const $ = id => document.getElementById(id);

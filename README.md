@@ -12,10 +12,14 @@ An interactive, responsive web application designed to measure individual carbon
 ## 🌟 Key Features
 
 - 🔐 **Authentication System (Client-Side Storage)**:
+  - **Default Admin Account**:
+    - **Email**: `admin@example.com`
+    - **Phone**: `9876543210`
+    - **Password**: `admin123`
   - Form validation with strict regex patterns for emails and 10-digit phone numbers.
   - SHA-256 hashed password storage using browser Web Cryptography API.
-  - Instant **⚡ Quick Demo Login** button for fast evaluation and testing.
-  - Per-user session isolation and history persistence.
+  - Instant **⚡ Quick Demo Login** button for fast 1-click evaluation.
+  - Per-user session isolation and emission history persistence.
 
 - 🧮 **Accurate Carbon Footprint Calculator**:
   - Calculates annual carbon footprints ($kg\text{ CO}_2/\text{year}$) across 5 key pillars:

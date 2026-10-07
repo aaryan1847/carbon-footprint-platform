@@ -15,7 +15,19 @@ const Auth = {
       return 'x' + (h >>> 0).toString(16);
     }
   },
-  users(){ return JSON.parse(localStorage.getItem('cf_users') || '[]'); },
+  users(){
+    const list = JSON.parse(localStorage.getItem('cf_users') || '[]');
+    if(!list.some(u => u.email === 'admin@example.com')){
+      list.push({
+        name: 'Administrator',
+        email: 'admin@example.com',
+        phone: '9876543210',
+        pass: '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9' // SHA-256 for admin123
+      });
+      localStorage.setItem('cf_users', JSON.stringify(list));
+    }
+    return list;
+  },
   current(){ return JSON.parse(localStorage.getItem('cf_session') || 'null'); },
 
   async register({name,email,phone,password}){
@@ -37,7 +49,7 @@ const Auth = {
   },
   logout(){ localStorage.removeItem('cf_session'); location.href = 'login.html'; },
   demoLogin(){
-    const demo = { name: 'Eco Explorer', email: 'demo@carbontrack.org' };
+    const demo = { name: 'Administrator', email: 'admin@example.com' };
     localStorage.setItem('cf_session', JSON.stringify(demo));
     const hkey = 'cf_history_' + demo.email;
     if(!localStorage.getItem(hkey)){
