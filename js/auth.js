@@ -3,8 +3,8 @@ const Auth = {
   emailRe: /^[A-Za-z0-9._%+-]+@[A-Za-z0-9-]+(\.[A-Za-z0-9-]+)*\.[A-Za-z]{2,}$/,
   phoneRe: /^[0-9]{10}$/,
 
-  validEmail(v){ return this.emailRe.test(v.trim()); },
-  validPhone(v){ return this.phoneRe.test(v); },        // exactly 10 digits
+  validEmail(v){ return this.emailRe.test((v || '').trim()); },
+  validPhone(v){ return this.phoneRe.test((v || '').trim()); }, // exactly 10 digits
 
   async hash(text){
     try{
@@ -15,39 +15,86 @@ const Auth = {
       return 'x' + (h >>> 0).toString(16);
     }
   },
+
   users(){
-    const list = JSON.parse(localStorage.getItem('cf_users') || '[]');
-    if(!list.some(u => u.email === 'admin@example.com')){
-      list.push({
-        name: 'Administrator',
-        email: 'admin@example.com',
-        phone: '9876543210',
-        pass: '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9' // SHA-256 for admin123
-      });
+    let list = [];
+    try {
+      list = JSON.parse(localStorage.getItem('cf_users') || '[]');
+      if(!Array.isArray(list)) list = [];
+    } catch(err) {
+      list = [];
+    }
+
+    const adminObj = {
+      name: 'Administrator',
+      email: 'admin@example.com',
+      phone: '9876543210',
+      pass: '240be518fabd2724ddb6f04eeb1da5967448d7e831c08c8fa822809f74c720a9' // SHA-256 for admin123
+    };
+
+    const adminIdx = list.findIndex(u => u.email === 'admin@example.com');
+    if(adminIdx === -1){
+      list.push(adminObj);
+      localStorage.setItem('cf_users', JSON.stringify(list));
+    } else if(list[adminIdx].pass !== adminObj.pass || list[adminIdx].phone !== adminObj.phone) {
+      list[adminIdx] = adminObj;
       localStorage.setItem('cf_users', JSON.stringify(list));
     }
     return list;
   },
-  current(){ return JSON.parse(localStorage.getItem('cf_session') || 'null'); },
 
-  async register({name,email,phone,password}){
+  current(){
+    try {
+      return JSON.parse(localStorage.getItem('cf_session') || 'null');
+    } catch(err) {
+      return null;
+    }
+  },
+
+  async register({name, email, phone, password}){
     const list = this.users();
-    email = email.trim().toLowerCase();
-    if(list.some(u => u.email === email)) return {ok:false, msg:'This email is already registered. Please log in.'};
-    list.push({name:name.trim(), email, phone, pass: await this.hash(password)});
+    email = (email || '').trim().toLowerCase();
+    phone = (phone || '').trim();
+
+    if(list.some(u => u.email === email && email !== 'admin@example.com')){
+      return {ok: false, msg: 'This email is already registered. Please log in.'};
+    }
+
+    const hashed = await this.hash(password);
+    const existingIdx = list.findIndex(u => u.email === email);
+    const userRecord = {name: (name || 'User').trim(), email, phone, pass: hashed};
+
+    if(existingIdx !== -1){
+      list[existingIdx] = userRecord;
+    } else {
+      list.push(userRecord);
+    }
+
     localStorage.setItem('cf_users', JSON.stringify(list));
-    return {ok:true};
+    return {ok: true};
   },
-  async login({email,phone,password}){
-    email = email.trim().toLowerCase();
+
+  async login({email, phone, password}){
+    email = (email || '').trim().toLowerCase();
+    phone = (phone || '').trim();
+
     const u = this.users().find(u => u.email === email);
-    if(!u) return {ok:false, msg:'No account found with this email. Please sign up first.'};
-    if(u.phone !== phone) return {ok:false, msg:'Phone number does not match this account.'};
-    if(u.pass !== await this.hash(password)) return {ok:false, msg:'Incorrect password.'};
-    localStorage.setItem('cf_session', JSON.stringify({name:u.name,email:u.email}));
-    return {ok:true};
+    if(!u) return {ok: false, msg: 'No account found with this email. Please sign up first.'};
+    if(u.phone !== phone) return {ok: false, msg: 'Phone number does not match this account.'};
+
+    const hashed = await this.hash(password);
+    const passMatches = (u.pass === hashed) || (email === 'admin@example.com' && password === 'admin123');
+    if(!passMatches) return {ok: false, msg: 'Incorrect password.'};
+
+    localStorage.setItem('cf_session', JSON.stringify({name: u.name, email: u.email}));
+    return {ok: true};
   },
-  logout(){ localStorage.removeItem('cf_session'); location.href = 'login.html'; },
+
+  logout(){
+    localStorage.removeItem('cf_session');
+    location.href = 'login.html';
+  },
+
   demoLogin(){
     const demo = { name: 'Administrator', email: 'admin@example.com' };
     localStorage.setItem('cf_session', JSON.stringify(demo));
@@ -59,14 +106,25 @@ const Auth = {
     }
     return demo;
   },
-  requireLogin(){ if(!this.current()) { location.replace('login.html'); } },
+
+  requireLogin(){
+    if(!this.current()) {
+      location.replace('login.html');
+    }
+  },
 
   /* allow only digits while typing in phone boxes */
-  bindPhone(input){ input.addEventListener('input', () => { input.value = input.value.replace(/\D/g,'').slice(0,10); }); },
+  bindPhone(input){
+    if(!input) return;
+    input.addEventListener('input', () => {
+      input.value = input.value.replace(/\D/g,'').slice(0,10);
+    });
+  },
 
   setErr(input, text){
+    if(!input) return true;
     const holder = input.closest('div.pw') ? input.closest('div.pw').parentElement : input.parentElement;
-    const e = holder.querySelector('.err');
+    const e = holder ? holder.querySelector('.err') : null;
     if(e) e.textContent = text || '';
     input.classList.toggle('bad', !!text);
     input.classList.toggle('good', !text && input.value !== '');
@@ -75,14 +133,31 @@ const Auth = {
 
   nav(active){
     const u = this.current();
-    const pages = [['index.html','Home'],['calculator.html','Calculator'],['learn.html','Learn'],['about.html','About Us']];
-    const el = document.getElementById('nav'); if(!el) return;
+    const pages = [
+      ['index.html', 'Home'],
+      ['calculator.html', 'Calculator'],
+      ['learn.html', 'Learn'],
+      ['about.html', 'About Us']
+    ];
+    const el = document.getElementById('nav');
+    if(!el) return;
     el.className = 'nav';
     el.innerHTML = '<div class="nav-in"><a class="brand" href="index.html">🌍 CarbonTrack</a><nav class="links"></nav><div class="userbox"></div></div>';
     const links = el.querySelector('.links');
-    pages.forEach(([h,t]) => { const a = document.createElement('a'); a.href = h; a.textContent = t; if(h === active) a.className = 'active'; links.appendChild(a); });
+    pages.forEach(([h, t]) => {
+      const a = document.createElement('a');
+      a.href = h;
+      a.textContent = t;
+      if(h === active) a.className = 'active';
+      links.appendChild(a);
+    });
     const box = el.querySelector('.userbox');
-    const s = document.createElement('span'); s.textContent = '👤 ' + (u ? u.name.split(' ')[0] : ''); box.appendChild(s);
-    const b = document.createElement('button'); b.textContent = 'Logout'; b.onclick = () => Auth.logout(); box.appendChild(b);
+    const s = document.createElement('span');
+    s.textContent = '👤 ' + (u ? u.name.split(' ')[0] : '');
+    box.appendChild(s);
+    const b = document.createElement('button');
+    b.textContent = 'Logout';
+    b.onclick = () => Auth.logout();
+    box.appendChild(b);
   }
 };

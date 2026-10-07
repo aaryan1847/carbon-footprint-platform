@@ -1,132 +1,202 @@
 <!DOCTYPE html>
-<html lang="en"><head>
-<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Log in to the Carbon Footprint Awareness Platform to track and calculate your environmental impact.">
-<meta name="theme-color" content="#0f2027">
-<title>Login | Carbon Footprint Awareness Platform</title>
-<link rel="icon" type="image/svg+xml" href="favicon.svg">
-<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="css/style.css">
-</head><body>
-<div class="background-animation"></div>
-<div class="auth-wrap"><div class="card auth">
-  <h2 style="text-align:center;font-size:1.6rem">🌍 Carbon Footprint Platform</h2>
-  <p style="text-align:center">Log in to measure and reduce your carbon footprint</p>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Log in to the Carbon Footprint Awareness Platform to track and calculate your environmental impact.">
+  <meta name="theme-color" content="#0f2027">
+  <title>Login | Carbon Footprint Awareness Platform</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="background-animation"></div>
+  <div class="auth-wrap">
+    <div class="card auth">
+      <h2 style="text-align:center;font-size:1.6rem">🌍 Carbon Footprint Platform</h2>
+      <p style="text-align:center">Log in to measure and reduce your carbon footprint</p>
 
-  <div class="tabs">
-    <button id="tabLogin" class="on" type="button">Login</button>
-    <button id="tabSign" type="button">Sign Up</button>
-  </div>
-
-  <form id="form" novalidate>
-    <div id="nameRow" class="hide">
-      <label for="name">Full Name</label>
-      <input id="name" type="text" placeholder="Your full name" autocomplete="name">
-      <div class="err"></div>
-    </div>
-    <div>
-      <label for="email">Email ID</label>
-      <input id="email" type="email" placeholder="example@gmail.com" autocomplete="email">
-      <div class="err"></div>
-    </div>
-    <div>
-      <label for="phone">Phone Number</label>
-      <input id="phone" type="text" inputmode="numeric" maxlength="10" placeholder="10 digit mobile number" autocomplete="tel">
-      <div class="err"></div>
-    </div>
-    <div>
-      <label for="password">Password</label>
-      <div class="pw">
-        <input id="password" type="password" placeholder="Minimum 6 characters" autocomplete="current-password">
-        <button type="button" class="eye" id="eye">Show</button>
+      <div class="tabs">
+        <button id="tabLogin" class="on" type="button">Login</button>
+        <button id="tabSign" type="button">Sign Up</button>
       </div>
-      <div class="err"></div>
+
+      <form id="form" novalidate>
+        <div id="nameRow" class="hide">
+          <label for="name">Full Name</label>
+          <input id="name" type="text" placeholder="Your full name" autocomplete="name">
+          <div class="err"></div>
+        </div>
+        <div>
+          <label for="email">Email ID</label>
+          <input id="email" type="email" placeholder="example@gmail.com" autocomplete="email">
+          <div class="err"></div>
+        </div>
+        <div>
+          <label for="phone">Phone Number</label>
+          <input id="phone" type="text" inputmode="numeric" maxlength="10" placeholder="10 digit mobile number" autocomplete="tel">
+          <div class="err"></div>
+        </div>
+        <div>
+          <label for="password">Password</label>
+          <div class="pw">
+            <input id="password" type="password" placeholder="Minimum 6 characters" autocomplete="current-password">
+            <button type="button" class="eye" id="eye">Show</button>
+          </div>
+          <div class="err"></div>
+        </div>
+        <div id="confRow" class="hide">
+          <label for="confirm">Confirm Password</label>
+          <input id="confirm" type="password" placeholder="Re-enter password">
+          <div class="err"></div>
+        </div>
+        <button id="submit" type="submit" style="width:100%;margin-top:20px">Login</button>
+        <div id="msg" class="msg"></div>
+      </form>
+
+      <button id="demoBtn" type="button" class="alt" style="width:100%;margin-top:12px;font-size:0.92rem;border:1px dashed var(--green)">⚡ Quick Demo Login (Instant Access)</button>
+
+      <div class="hint" style="margin-top:14px;text-align:center;line-height:1.6">
+        <div style="color:#69f0ae;font-weight:600">🔑 Default Admin Credentials:</div>
+        <div>Email: <b>admin@example.com</b> · Phone: <b>9876543210</b> · Pass: <b>admin123</b></div>
+        <div style="margin-top:6px"><a href="#" id="fillAdmin" style="text-decoration:underline;cursor:pointer;font-size:0.85rem;color:#69f0ae">Click to auto-fill Admin credentials</a></div>
+      </div>
     </div>
-    <div id="confRow" class="hide">
-      <label for="confirm">Confirm Password</label>
-      <input id="confirm" type="password" placeholder="Re-enter password">
-      <div class="err"></div>
-    </div>
-    <button id="submit" type="submit" style="width:100%;margin-top:20px">Login</button>
-    <div id="msg" class="msg"></div>
-  </form>
-  <button id="demoBtn" type="button" class="alt" style="width:100%;margin-top:12px;font-size:0.92rem;border:1px dashed var(--green)">⚡ Quick Demo Login (Instant Access)</button>
-  <div class="hint" style="margin-top:14px;text-align:center;line-height:1.6">
-    <div style="color:#69f0ae;font-weight:600">🔑 Default Admin Credentials:</div>
-    <div>Email: <b>admin@example.com</b> · Phone: <b>9876543210</b> · Pass: <b>admin123</b></div>
-    <div style="margin-top:4px"><a href="#" id="fillAdmin" style="text-decoration:underline;cursor:pointer;font-size:0.85rem">Click to auto-fill Admin credentials</a></div>
   </div>
-</div></div>
 
-<script src="js/auth.js"></script>
-<script>
-if (Auth.current()) location.replace('index.html');
-$('demoBtn').onclick = () => {
-  Auth.demoLogin();
-  location.href = 'index.html';
-};
-$('fillAdmin').onclick = (e) => {
-  e.preventDefault();
-  setMode('login');
-  $('email').value = 'admin@example.com';
-  $('phone').value = '9876543210';
-  $('password').value = 'admin123';
-};
-let mode = 'login';
-const $ = id => document.getElementById(id);
-Auth.bindPhone($('phone'));
+  <script src="js/auth.js"></script>
+  <script>
+    // Helper must be defined before ANY usage
+    const $ = id => document.getElementById(id);
+    let mode = 'login';
 
-function setMode(m){
-  mode = m;
-  $('tabLogin').classList.toggle('on', m === 'login');
-  $('tabSign').classList.toggle('on', m === 'signup');
-  $('nameRow').classList.toggle('hide', m === 'login');
-  $('confRow').classList.toggle('hide', m === 'login');
-  $('submit').textContent = m === 'login' ? 'Login' : 'Create Account';
-  $('msg').className = 'msg';
-  ['name','email','phone','password','confirm'].forEach(i => Auth.setErr($(i), ''));
-}
-$('tabLogin').onclick = () => setMode('login');
-$('tabSign').onclick = () => setMode('signup');
-$('eye').onclick = () => { const p = $('password'); const show = p.type === 'password'; p.type = show ? 'text' : 'password'; $('eye').textContent = show ? 'Hide' : 'Show'; };
+    // If already logged in, redirect
+    if (Auth.current()) {
+      location.replace('index.html');
+    }
 
-/* live validation */
-$('email').addEventListener('blur', validateEmail);
-$('phone').addEventListener('blur', validatePhone);
-function validateName(){ const v = $('name').value.trim(); return Auth.setErr($('name'), v.length >= 3 && /^[A-Za-z .]+$/.test(v) ? '' : 'Enter your full name (letters only, minimum 3).'); }
-function validateEmail(){
-  const v = $('email').value.trim();
-  if(!v) return Auth.setErr($('email'), 'Email ID is required.');
-  return Auth.setErr($('email'), Auth.validEmail(v) ? '' : 'Enter a valid email like name@example.com');
-}
-function validatePhone(){
-  const v = $('phone').value;
-  if(!v) return Auth.setErr($('phone'), 'Phone number is required.');
-  return Auth.setErr($('phone'), Auth.validPhone(v) ? '' : 'Phone number must be exactly 10 digits.');
-}
-function validatePass(){ const v = $('password').value; return Auth.setErr($('password'), v.length >= 6 ? '' : 'Password must be at least 6 characters.'); }
-function validateConfirm(){ return Auth.setErr($('confirm'), $('confirm').value === $('password').value && $('confirm').value ? '' : 'Passwords do not match.'); }
+    // Phone input restriction
+    Auth.bindPhone($('phone'));
 
-$('form').addEventListener('submit', async e => {
-  e.preventDefault();
-  const msg = $('msg'); msg.className = 'msg';
-  const checks = [validateEmail(), validatePhone(), validatePass()];
-  if(mode === 'signup') checks.push(validateName(), validateConfirm());
-  if(checks.includes(false)) return;
+    function setMode(m) {
+      mode = m;
+      $('tabLogin').classList.toggle('on', m === 'login');
+      $('tabSign').classList.toggle('on', m === 'signup');
+      $('nameRow').classList.toggle('hide', m === 'login');
+      $('confRow').classList.toggle('hide', m === 'login');
+      $('submit').textContent = m === 'login' ? 'Login' : 'Create Account';
+      $('msg').className = 'msg';
+      $('msg').textContent = '';
+      ['name', 'email', 'phone', 'password', 'confirm'].forEach(i => Auth.setErr($(i), ''));
+    }
 
-  const data = {name:$('name').value, email:$('email').value, phone:$('phone').value, password:$('password').value};
-  if(mode === 'signup'){
-    const r = await Auth.register(data);
-    if(!r.ok){ msg.textContent = r.msg; msg.className = 'msg no'; return; }
-    msg.textContent = 'Account created! Please log in now.'; msg.className = 'msg ok';
-    setMode('login'); $('msg').textContent = 'Account created! Please log in now.'; $('msg').className = 'msg ok';
-    $('password').value = '';
-  } else {
-    const r = await Auth.login(data);
-    if(!r.ok){ msg.textContent = r.msg; msg.className = 'msg no'; return; }
-    msg.textContent = 'Login successful! Redirecting...'; msg.className = 'msg ok';
-    setTimeout(() => location.href = 'index.html', 700);
-  }
-});
-</script>
-</body></html>
+    // Tab buttons
+    $('tabLogin').onclick = () => setMode('login');
+    $('tabSign').onclick = () => setMode('signup');
+
+    // Show/Hide password
+    $('eye').onclick = () => {
+      const p = $('password');
+      const show = p.type === 'password';
+      p.type = show ? 'text' : 'password';
+      $('eye').textContent = show ? 'Hide' : 'Show';
+    };
+
+    // Auto-fill admin credentials
+    $('fillAdmin').onclick = (e) => {
+      e.preventDefault();
+      setMode('login');
+      $('email').value = 'admin@example.com';
+      $('phone').value = '9876543210';
+      $('password').value = 'admin123';
+      validateEmail();
+      validatePhone();
+      validatePass();
+    };
+
+    // Quick demo 1-click login
+    $('demoBtn').onclick = () => {
+      Auth.demoLogin();
+      location.href = 'index.html';
+    };
+
+    /* Live validation functions */
+    function validateName() {
+      const v = $('name').value.trim();
+      return Auth.setErr($('name'), v.length >= 3 && /^[A-Za-z .]+$/.test(v) ? '' : 'Enter your full name (letters only, minimum 3).');
+    }
+
+    function validateEmail() {
+      const v = $('email').value.trim();
+      if (!v) return Auth.setErr($('email'), 'Email ID is required.');
+      return Auth.setErr($('email'), Auth.validEmail(v) ? '' : 'Enter a valid email like name@example.com');
+    }
+
+    function validatePhone() {
+      const v = $('phone').value.trim();
+      if (!v) return Auth.setErr($('phone'), 'Phone number is required.');
+      return Auth.setErr($('phone'), Auth.validPhone(v) ? '' : 'Phone number must be exactly 10 digits.');
+    }
+
+    function validatePass() {
+      const v = $('password').value;
+      return Auth.setErr($('password'), v.length >= 6 ? '' : 'Password must be at least 6 characters.');
+    }
+
+    function validateConfirm() {
+      return Auth.setErr($('confirm'), ($('confirm').value === $('password').value && $('confirm').value) ? '' : 'Passwords do not match.');
+    }
+
+    $('email').addEventListener('blur', validateEmail);
+    $('phone').addEventListener('blur', validatePhone);
+    $('password').addEventListener('input', () => { if ($('password').value.length >= 6) Auth.setErr($('password'), ''); });
+
+    // Form submission handler
+    $('form').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const msg = $('msg');
+      msg.className = 'msg';
+      msg.textContent = '';
+
+      const checks = [validateEmail(), validatePhone(), validatePass()];
+      if (mode === 'signup') {
+        checks.push(validateName(), validateConfirm());
+      }
+      if (checks.includes(false)) {
+        return;
+      }
+
+      const data = {
+        name: $('name').value,
+        email: $('email').value,
+        phone: $('phone').value,
+        password: $('password').value
+      };
+
+      if (mode === 'signup') {
+        const r = await Auth.register(data);
+        if (!r.ok) {
+          msg.textContent = r.msg;
+          msg.className = 'msg no';
+          return;
+        }
+        setMode('login');
+        msg.textContent = 'Account created successfully! Please log in now.';
+        msg.className = 'msg ok';
+        $('password').value = '';
+      } else {
+        const r = await Auth.login(data);
+        if (!r.ok) {
+          msg.textContent = r.msg;
+          msg.className = 'msg no';
+          return;
+        }
+        msg.textContent = 'Login successful! Redirecting...';
+        msg.className = 'msg ok';
+        setTimeout(() => { location.href = 'index.html'; }, 600);
+      }
+    });
+  </script>
+</body>
+</html>
