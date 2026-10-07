@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Calculate and understand your daily carbon footprint. Compare emissions, get eco tips, and download reports.">
+<meta name="theme-color" content="#0f2027">
+<title>Home | Carbon Footprint Awareness Platform</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head><body>
+<div class="background-animation"></div>
+<header id="nav"></header>
+
+<main class="container">
+  <section class="hero">
+    <h1>🌍 Carbon Footprint Awareness Platform</h1>
+    <p id="welcome">Welcome!</p>
+    <p>Know how much carbon dioxide your daily life creates, compare it with the country and world average, and learn easy ways to reduce it.</p>
+    <a class="btn" href="calculator.html">Calculate My Footprint</a>
+    <a class="btn alt" href="learn.html">Learn the Basics</a>
+  </section>
+
+  <h2 style="text-align:center;margin-bottom:16px">What is a Carbon Footprint? (in simple words)</h2>
+  <div class="card">
+    <p style="color:#fff">A <b>carbon footprint</b> is the total amount of greenhouse gases (mainly carbon dioxide, CO₂) that we release into the air because of what we do: using electricity, travelling, cooking, eating food and buying things. It is measured in <b>kilograms (kg) or tonnes of CO₂</b> per year.</p>
+    <p style="margin-top:10px">Think of it like a footprint on sand: every activity leaves a mark on the planet. The smaller the mark, the better for Earth.</p>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="icon">⚡</div><h3>Electricity</h3><p>Most electricity comes from burning coal, which releases CO₂. Switching off unused fans and lights helps.</p></div>
+    <div class="card"><div class="icon">🚗</div><h3>Transport</h3><p>Petrol and diesel vehicles and flights produce a large part of our emissions.</p></div>
+    <div class="card"><div class="icon">🍽️</div><h3>Food &amp; Cooking</h3><p>LPG for cooking and the food we eat also add to our footprint.</p></div>
+    <div class="card"><div class="icon">♻️</div><h3>Waste</h3><p>Reducing, reusing and recycling means less new material and less pollution.</p></div>
+  </div>
+
+  <div class="two">
+    <div class="card">
+      <h2>🚀 How to use this website</h2>
+      <ul>
+        <li>1. Open the <b>Calculator</b> page.</li>
+        <li>2. Enter your monthly electricity, travel, LPG and diet.</li>
+        <li>3. See your total emission, Eco Score and comparison chart.</li>
+        <li>4. Follow the personalised tips and download your PDF report.</li>
+      </ul>
+    </div>
+    <div class="card facts">
+      <h2>💡 Did you know?</h2>
+      <ul>
+        <li>The average person in India emits about 2 tonnes of CO₂ per year.</li>
+        <li>The world average is about 4.7 tonnes per person per year.</li>
+        <li>One mature tree absorbs roughly 20 kg of CO₂ every year.</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="card" id="statCard">
+    <h2>📊 Your last result</h2>
+    <p id="lastResult">You have not calculated yet. Go to the calculator to get started.</p>
+  </div>
+</main>
+
+<footer>© 2026 Carbon Footprint Awareness Platform · Web Technology Project</footer>
+
+<script src="js/auth.js"></script>
+<script>
+Auth.requireLogin();
+Auth.nav('index.html');
+const u = Auth.current();
+if (u) {
+  document.getElementById('welcome').textContent = 'Welcome, ' + u.name + '!';
+  const hist = JSON.parse(localStorage.getItem('cf_history_' + u.email) || '[]');
+  if (hist.length) {
+    const h = hist[hist.length - 1];
+    document.getElementById('lastResult').textContent =
+      'On ' + h.date + ' your footprint was ' + h.annual.toLocaleString() + ' kg CO₂ per year (' + h.level + ' level, Eco Score ' + h.score + '/100).';
+  }
+}
+</script>
+</body></html>

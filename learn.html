@@ -1,0 +1,122 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Learn the fundamentals of carbon footprints, greenhouse gases, climate change, and test your knowledge with our interactive quiz.">
+<meta name="theme-color" content="#0f2027">
+<title>Learn | Carbon Footprint Awareness Platform</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head><body>
+<div class="background-animation"></div>
+<header id="nav"></header>
+
+<main class="container">
+  <h1>📘 Learn About Carbon Footprint</h1>
+  <p class="sub">Simple and easy information for everyone</p>
+
+  <div class="two">
+    <div class="card">
+      <h2>What is it?</h2>
+      <p style="color:#fff">A carbon footprint is the total greenhouse gas (mostly CO₂) released because of the things we do every day. It is counted in kg or tonnes of CO₂ per year.</p>
+    </div>
+    <div class="card">
+      <h2>Why does it matter?</h2>
+      <p style="color:#fff">Too much CO₂ traps heat in the atmosphere. This is called the <b>greenhouse effect</b> and it causes global warming, melting glaciers, floods, heat waves and rising sea levels.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>🌫️ Main greenhouse gases</h2>
+    <table>
+      <thead><tr><th>Gas</th><th>Main source</th></tr></thead>
+      <tbody>
+        <tr><td>Carbon dioxide (CO₂)</td><td>Burning coal, petrol, diesel and gas</td></tr>
+        <tr><td>Methane (CH₄)</td><td>Farming, cattle, landfills</td></tr>
+        <tr><td>Nitrous oxide (N₂O)</td><td>Fertilisers and agriculture</td></tr>
+      </tbody>
+    </table>
+  </div>
+
+  <div class="grid">
+    <div class="card"><div class="icon">1️⃣</div><h3>Energy</h3><p>Power plants burning coal and gas are the biggest source worldwide.</p></div>
+    <div class="card"><div class="icon">2️⃣</div><h3>Transport</h3><p>Cars, buses, trucks, ships and planes burn fuel.</p></div>
+    <div class="card"><div class="icon">3️⃣</div><h3>Industry</h3><p>Making cement, steel and plastic needs a lot of energy.</p></div>
+    <div class="card"><div class="icon">4️⃣</div><h3>Food &amp; Farming</h3><p>Land use, cattle and fertiliser release CO₂, methane and N₂O.</p></div>
+  </div>
+
+  <div class="card facts">
+    <h2>✅ 10 easy ways to reduce your footprint</h2>
+    <ul>
+      <li>Switch off lights, fans and chargers when not in use.</li>
+      <li>Use LED bulbs and energy-efficient (star rated) appliances.</li>
+      <li>Walk, cycle, or use bus / metro / carpool instead of a car.</li>
+      <li>Use a train instead of a plane for short trips.</li>
+      <li>Eat more plant-based food and do not waste food.</li>
+      <li>Reduce single-use plastic; carry a cloth bag and water bottle.</li>
+      <li>Reuse, repair and recycle things before buying new ones.</li>
+      <li>Save water; fix leaking taps.</li>
+      <li>Plant trees and take care of them.</li>
+      <li>Use solar energy where possible and tell others about it.</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🇮🇳 India and the world</h2>
+    <p style="color:#fff">India has set a goal to reach <b>net zero emissions by 2070</b>. Everyone can help by making small changes. The "1.5°C goal" in our chart is the yearly per-person level scientists suggest to keep global warming within safe limits (about 2.3 tonnes by 2030).</p>
+  </div>
+
+  <div class="card">
+    <h2>🧠 Test Yourself: Quick Quiz</h2>
+    <div class="progress"><div id="bar"></div></div>
+    <div id="quiz"></div>
+  </div>
+</main>
+
+<footer>© 2026 Carbon Footprint Awareness Platform · Web Technology Project</footer>
+
+<script src="js/auth.js"></script>
+<script>
+Auth.requireLogin();
+Auth.nav('learn.html');
+
+const questions = [
+  { q: 'Which gas is the main contributor to a carbon footprint?', o: ['Oxygen', 'Carbon dioxide', 'Nitrogen'], a: 1 },
+  { q: 'Which of these reduces your carbon footprint the most?', o: ['Using a car for short trips', 'Leaving lights on', 'Using public transport'], a: 2 },
+  { q: 'What is the greenhouse effect?', o: ['Plants growing in a glass house', 'Gases trapping heat in the atmosphere', 'Rain in summer'], a: 1 },
+  { q: 'Roughly how much CO₂ does one mature tree absorb in a year?', o: ['About 20 kg', 'About 2 kg', 'About 2000 kg'], a: 0 },
+  { q: 'By which year has India aimed to reach net zero emissions?', o: ['2030', '2050', '2070'], a: 2 }
+];
+let i = 0, score = 0;
+const box = document.getElementById('quiz');
+
+function show() {
+  document.getElementById('bar').style.width = (i / questions.length * 100) + '%';
+  box.innerHTML = '';
+  if (i >= questions.length) {
+    const h = document.createElement('h3');
+    h.textContent = 'Your score: ' + score + ' / ' + questions.length;
+    const p = document.createElement('p');
+    p.textContent = score >= 4 ? 'Excellent! You are a carbon champion 🌟' : score >= 3 ? 'Good job! Read the tips again to improve.' : 'Keep learning, you can do better next time!';
+    const b = document.createElement('button'); b.textContent = 'Try Again'; b.style.marginTop = '12px';
+    b.onclick = () => { i = 0; score = 0; show(); };
+    box.append(h, p, b);
+    return;
+  }
+  const item = questions[i];
+  const wrap = document.createElement('div'); wrap.className = 'q';
+  const t = document.createElement('h3'); t.textContent = (i + 1) + '. ' + item.q; wrap.appendChild(t);
+  item.o.forEach((text, idx) => {
+    const b = document.createElement('button'); b.className = 'opt'; b.textContent = text;
+    b.onclick = () => {
+      wrap.querySelectorAll('.opt').forEach((x, k) => { x.disabled = true; if (k === item.a) x.classList.add('right'); });
+      if (idx === item.a) score++; else b.classList.add('wrong');
+      setTimeout(() => { i++; show(); }, 1000);
+    };
+    wrap.appendChild(b);
+  });
+  box.appendChild(wrap);
+}
+show();
+</script>
+</body></html>

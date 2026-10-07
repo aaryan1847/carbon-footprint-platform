@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Calculate your annual carbon footprint with energy, travel, fuel, and dietary emissions calculators.">
+<meta name="theme-color" content="#0f2027">
+<title>Calculator | Carbon Footprint Awareness Platform</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+</head><body>
+<div class="background-animation"></div>
+<header id="nav"></header>
+
+<main class="container">
+  <h1>🧮 Carbon Footprint Calculator</h1>
+  <p class="sub">Enter your average monthly usage. Leave a box empty if it does not apply to you.</p>
+
+  <div class="card">
+    <div>
+      <label for="electricity">Electricity Usage (kWh / month)</label>
+      <input type="number" id="electricity" min="0" placeholder="e.g. 150">
+      <div class="err"></div>
+    </div>
+    <div>
+      <label for="vehicle">Vehicle Travel (km / month)</label>
+      <input type="number" id="vehicle" min="0" placeholder="e.g. 300">
+      <div class="err"></div>
+    </div>
+    <div>
+      <label for="flight">Flight Travel (km / year)</label>
+      <input type="number" id="flight" min="0" placeholder="e.g. 2000">
+      <div class="err"></div>
+    </div>
+    <div>
+      <label for="lpg">LPG Cooking Gas (14.2 kg cylinders / month)</label>
+      <input type="number" id="lpg" min="0" step="0.1" placeholder="e.g. 1">
+      <div class="err"></div>
+    </div>
+    <div>
+      <label for="diet">Diet Type</label>
+      <select id="diet">
+        <option value="1100">Vegetarian</option>
+        <option value="1700" selected>Mixed (veg + non-veg)</option>
+        <option value="2500">Non-vegetarian (meat daily)</option>
+      </select>
+    </div>
+
+    <div class="buttons">
+      <button onclick="calculateFootprint()">Calculate</button>
+      <button class="alt" onclick="downloadPDF()">Download PDF</button>
+      <button class="alt" onclick="resetData()">Reset</button>
+    </div>
+  </div>
+
+  <div class="dashboard">
+    <div class="box"><h2>Total Emission</h2><p id="totalEmission">0 kg CO₂/year</p></div>
+    <div class="box"><h2>Eco Score</h2><p id="ecoScore">0/100</p></div>
+    <div class="box"><h2>Carbon Level</h2><p id="carbonLevel">-</p></div>
+    <div class="box"><h2>Trees Needed</h2><p id="trees">0</p></div>
+  </div>
+  <p class="hint" style="margin-bottom:20px">Trees needed = how many trees must grow for one year to absorb your yearly CO₂ (about 20 kg per tree).</p>
+
+  <div class="two">
+    <div class="card"><h2>Where your emission comes from</h2><canvas id="footprintChart"></canvas></div>
+    <div class="card"><h2>You vs the average person</h2><canvas id="compareChart"></canvas></div>
+  </div>
+
+  <div class="card facts">
+    <h2>🌱 Eco Suggestions for You</h2>
+    <ul id="tipsList"><li>Calculate your footprint to get personalised tips.</li></ul>
+  </div>
+
+  <div class="card">
+    <div style="display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:10px">
+      <h2 style="margin:0">Emission History</h2>
+      <button class="alt" style="padding:8px 14px;font-size:.9rem" onclick="clearHistory()">Clear History</button>
+    </div>
+    <table>
+      <thead><tr><th>#</th><th>Date</th><th>Total (kg CO₂/yr)</th><th>Score</th><th>Level</th></tr></thead>
+      <tbody id="historyBody"></tbody>
+    </table>
+    <p class="hint" id="noHistory">No records yet.</p>
+  </div>
+
+  <div class="card">
+    <h3>How is it calculated?</h3>
+    <p class="hint" style="font-size:.88rem">Electricity: 0.82 kg CO₂ per kWh (approx. Indian grid) · Vehicle: 0.21 kg per km · Flight: 0.15 kg per km · LPG: 42 kg per cylinder · Diet: yearly estimate by diet type. These are simple average values, so results are estimates.</p>
+  </div>
+</main>
+
+<footer>© 2026 Carbon Footprint Awareness Platform · Web Technology Project</footer>
+
+<script src="js/auth.js"></script>
+<script src="js/calculator.js"></script>
+</body></html>

@@ -1,0 +1,23 @@
+{
+  "name": "carbon-footprint-platform",
+  "version": "1.0.0",
+  "description": "Carbon Footprint Awareness Platform - An interactive Web Technology project calculating personal carbon footprint with dynamic charts, PDF reporting, and eco tips.",
+  "scripts": {
+    "start": "echo 'Static web application ready'",
+    "build": "echo 'Build complete'"
+  },
+  "keywords": [
+    "carbon-footprint",
+    "sustainability",
+    "eco-tracker",
+    "web-technology",
+    "html5",
+    "css3",
+    "javascript",
+    "chartjs",
+    "jspdf"
+  ],
+  "author": "Aaryan (https://github.com/aaryan1847)",
+  "license": "MIT",
+  "homepage": "https://github.com/aaryan1847/carbon-footprint-platform"
+}

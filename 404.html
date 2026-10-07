@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Page Not Found - Carbon Footprint Awareness Platform">
+  <meta name="theme-color" content="#0f2027">
+  <title>404 - Page Not Found | Carbon Footprint Awareness Platform</title>
+  <link rel="icon" type="image/svg+xml" href="favicon.svg">
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+  <div class="background-animation"></div>
+  <header id="nav"></header>
+
+  <main class="container" style="text-align: center; padding-top: 60px;">
+    <div class="card" style="max-width: 580px; margin: 40px auto; padding: 40px 30px;">
+      <div style="font-size: 4rem; line-height: 1; margin-bottom: 12px;">🌱 404</div>
+      <h1 style="font-size: 2rem; margin-bottom: 12px;">Page Not Found</h1>
+      <p style="margin-bottom: 24px;">The page you are looking for doesn't exist, was removed, or had its URL changed.</p>
+      <div style="display: flex; gap: 12px; justify-content: center; flex-wrap: wrap;">
+        <a class="btn" href="index.html">Go to Dashboard</a>
+        <a class="btn alt" href="calculator.html">Open Calculator</a>
+      </div>
+    </div>
+  </main>
+
+  <footer>© 2026 Carbon Footprint Awareness Platform · Web Technology Project</footer>
+
+  <script src="js/auth.js"></script>
+  <script>
+    if (Auth.current()) {
+      Auth.nav('404');
+    }
+  </script>
+</body>
+</html>

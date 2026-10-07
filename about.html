@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en"><head>
+<meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="About the Carbon Footprint Awareness Platform - A Web Technology Project developed by Aaryan.">
+<meta name="theme-color" content="#0f2027">
+<title>About Us | Carbon Footprint Awareness Platform</title>
+<link rel="icon" type="image/svg+xml" href="favicon.svg">
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head><body>
+<div class="background-animation"></div>
+<header id="nav"></header>
+
+<main class="container">
+  <h1>ℹ️ About Us</h1>
+  <p class="sub">Who we are and why we built this website</p>
+
+  <div class="two">
+    <div class="card">
+      <h2>🎯 Our Mission</h2>
+      <p style="color:#fff">To make people aware of their carbon footprint in a simple way, and to motivate them to take small steps that protect our planet.</p>
+    </div>
+    <div class="card">
+      <h2>👁️ Our Vision</h2>
+      <p style="color:#fff">A cleaner, greener future where every person knows their impact on the environment and works to reduce it.</p>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>About the Project</h2>
+    <p style="color:#fff">The Carbon Footprint Awareness Platform is a Web Technology project. It lets a registered user calculate yearly CO₂ emissions from electricity, travel, LPG and diet, view charts, compare with the India and world average, get personalised eco tips and download a PDF report.</p>
+  </div>
+
+  <div class="card facts">
+    <h2>⭐ Features</h2>
+    <ul>
+      <li>Secure login and sign-up with email format and 10-digit phone validation</li>
+      <li>Carbon footprint calculator with Eco Score, carbon level and trees needed</li>
+      <li>Doughnut and comparison bar charts (Chart.js)</li>
+      <li>Personalised eco suggestions based on your biggest emission source</li>
+      <li>Emission history saved separately for each user</li>
+      <li>Downloadable PDF report (jsPDF)</li>
+      <li>Learn page with simple information and a quiz</li>
+      <li>Responsive design for mobile, tablet and desktop</li>
+    </ul>
+  </div>
+
+  <div class="card">
+    <h2>🛠️ Technologies Used</h2>
+    <p style="color:#fff">HTML5 · CSS3 (Flexbox, Grid, animations) · JavaScript (DOM, Regular Expressions, LocalStorage) · Chart.js · jsPDF</p>
+  </div>
+
+  <div class="card">
+    <h2>👨‍🎓 Developed By</h2>
+    <p style="color:#fff"><b>Aaryan</b> (<a href="https://github.com/aaryan1847" target="_blank" rel="noopener">@aaryan1847</a>) · Roll No: ____ · Class / Course: ____</p>
+    <p>Guided by: Your Teacher's Name</p>
+  </div>
+
+  <div class="card">
+    <h2>📩 Contact Us</h2>
+    <form id="contact" novalidate>
+      <div><label for="cname">Name</label><input id="cname" type="text" placeholder="Your name"><div class="err"></div></div>
+      <div><label for="cemail">Email ID</label><input id="cemail" type="email" placeholder="example@gmail.com"><div class="err"></div></div>
+      <div><label for="cphone">Phone Number</label><input id="cphone" type="text" inputmode="numeric" maxlength="10" placeholder="10 digit mobile number"><div class="err"></div></div>
+      <div><label for="cmsg">Message</label><textarea id="cmsg" rows="4" placeholder="Write your message"></textarea><div class="err"></div></div>
+      <button type="submit" style="margin-top:18px">Send Message</button>
+      <div id="cres" class="msg"></div>
+    </form>
+  </div>
+</main>
+
+<footer>© 2026 Carbon Footprint Awareness Platform · Web Technology Project</footer>
+
+<script src="js/auth.js"></script>
+<script>
+Auth.requireLogin();
+Auth.nav('about.html');
+const $ = id => document.getElementById(id);
+Auth.bindPhone($('cphone'));
+
+$('contact').addEventListener('submit', e => {
+  e.preventDefault();
+  const n = $('cname').value.trim(), em = $('cemail').value, ph = $('cphone').value, m = $('cmsg').value.trim();
+  const r = [
+    Auth.setErr($('cname'), n.length >= 3 ? '' : 'Please enter your name (minimum 3 letters).'),
+    Auth.setErr($('cemail'), Auth.validEmail(em) ? '' : 'Enter a valid email like name@example.com'),
+    Auth.setErr($('cphone'), Auth.validPhone(ph) ? '' : 'Phone number must be exactly 10 digits.'),
+    Auth.setErr($('cmsg'), m.length >= 10 ? '' : 'Message must be at least 10 characters.')
+  ];
+  if (r.includes(false)) return;
+  const all = JSON.parse(localStorage.getItem('cf_messages') || '[]');
+  all.push({ n, em, ph, m, date: new Date().toLocaleString() });
+  localStorage.setItem('cf_messages', JSON.stringify(all));
+  $('cres').textContent = 'Thank you, ' + n + '! Your message has been sent.';
+  $('cres').className = 'msg ok';
+  $('contact').reset();
+  ['cname','cemail','cphone','cmsg'].forEach(id => $(id).classList.remove('good'));
+});
+</script>
+</body></html>
